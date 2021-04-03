@@ -15,18 +15,18 @@ namespace EventsTask
         public event EventHandler<string> OnNotify;
 
         public event EventHandler<Tuple<string, Exception>> OnException;
-
+        
         public void ExceptionCall(string exceptionMessage)
         {
             ArgsException argsException = new(exceptionMessage);
             Tuple<string, Exception> exception = new("incorrect data", argsException);
-            OnException(EventArgs.Empty, exception);
+            OnException(this, exception);
         }
 
         public Charge CalculateSubsidy(Volume volumes, Tariff tariff)
         {
             Charge change = new Charge();
-            OnNotify(EventArgs.Empty, $"Start counting ({DateTime.Now})");
+            OnNotify(this, $"Start counting ({DateTime.Now})");
             if (volumes.HouseId == tariff.HouseId)
             {
                 if (volumes.ServiceId == tariff.ServiceId)
@@ -41,7 +41,6 @@ namespace EventsTask
                                 change.HouseId = tariff.HouseId;
                                 change.Value = tariff.Value * volumes.Value;
                                 change.Month = DateTime.Today;
-                                OnNotify(EventArgs.Empty, $"End counting ({DateTime.Now})");
                             }
                             else
                             {
