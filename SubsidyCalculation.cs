@@ -20,13 +20,13 @@ namespace EventsTask
         {
             ArgsException argsException = new(exceptionMessage);
             Tuple<string, Exception> exception = new("incorrect data", argsException);
-            OnException.Invoke(this, exception);
+            OnException?.Invoke(this, exception);
         }
 
         public Charge CalculateSubsidy(Volume volumes, Tariff tariff)
         {
             Charge change = new Charge();
-            OnNotify.Invoke(this, $"Start counting ({DateTime.Now})");
+            OnNotify?.Invoke(this, $"Start counting ({DateTime.Now})");
             if (volumes.HouseId == tariff.HouseId)
             {
                 if (volumes.ServiceId == tariff.ServiceId)
@@ -66,7 +66,7 @@ namespace EventsTask
             {
                 ExceptionCall("incorrect house ID");
             }
-            OnNotify.Invoke(this, $"End counting ({DateTime.Now})");
+            OnNotify?.Invoke(this, $"End counting ({DateTime.Now})");
             return change;
         }
     }
