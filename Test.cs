@@ -27,7 +27,9 @@ namespace EventsTask
             SubsidyCalculation subsidyCalculation = new();
             subsidyCalculation.OnNotify += SubsidyCalculation_OnNotify;
             subsidyCalculation.OnException += SubsidyCalculation_OnException;
-            subsidyCalculation.CalculateSubsidy(volume, tariff);
+            Charge charge = subsidyCalculation.CalculateSubsidy(volume, tariff);
+
+            System.Console.WriteLine(charge.Value);
         }
 
         static void SubsidyCalculation_OnNotify(object sender, string testMessage)
